@@ -4,7 +4,8 @@
 
 <p>A function is triggered when the user is pressing a key in the input field.</p>
 
-<input type="text" onkeypress="betterFn(event)">
+<input type="text" onkeypress="betterFnDebouncing(event)">
+<input type="button" onclick="betterFnThrotle(event)" value="button">
 
 <script>
 let count = 0
@@ -24,7 +25,23 @@ const debouncing = (fn, delay) => {
     }
 }
 
-const betterFn = debouncing(myFunction,1000)
+const throtling = (fn, delay) => {
+    let fired = true
+    return function () {
+        let context = this
+        let args = arguments
+        if(fired){
+          fn.apply(context,args)
+          fired= false
+          setTimeout(()=> {
+            fired = true
+          },delay)
+        }
+    }
+}
+
+const betterFnDebouncing = debouncing(myFunction,1000)
+const betterFnThrotle = throtling(myFunction,2000)
 
 </script>
 
