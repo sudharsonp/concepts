@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>A function is triggered when the user is pressing a key in the input field.</p>
+
+<input type="text" onkeypress="betterFn(event)">
+
+<script>
+let count = 0
+function myFunction(event) {
+  console.log('count..',count++, event.target.value)
+}
+
+const debouncing = (fn, delay) => {
+    let timer
+    return function () {
+        let context = this
+        let args = arguments
+        clearTimeout(timer)
+        timer = setTimeout(()=> {
+           fn.apply(context,args)
+        },delay)
+    }
+}
+
+const betterFn = debouncing(myFunction,1000)
+
+</script>
+
+</body>
+</html>
