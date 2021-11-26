@@ -8,6 +8,8 @@
 <input type="button" onclick="betterFnThrotle(event)" value="button">
 
 <script>
+
+/* Debouncing and throtling start */
 let count = 0
 function myFunction(event) {
   console.log('count..',count++, event.target.value)
@@ -40,6 +42,10 @@ const throtling = (fn, delay) => {
     }
 }
 
+const betterFnDebouncing = debouncing(myFunction,1000)
+const betterFnThrotle = throtling(myFunction,2000)
+/* Debouncing and throling  end */
+/* currn start */
 const curry = (fn) => {
   return function curried(...args){
     if(args.length >= fn.length){
@@ -61,7 +67,8 @@ let curriedSum = curry(sum);
 //console.log( curriedSum(1, 2, 3) ); // 6, still callable normally
 console.log( curriedSum(1)(2,3) ); // 6, currying of 1st arg
 //console.log( curriedSum(1)(2)(3) )
-
+ 
+/* curry end */
 
 let person = { 
   name: 'sudharson',
@@ -77,6 +84,7 @@ let printNamefn = (district,country) => {
   //The this represent the window due to arrow function
 }
 
+/*My bind - start*/
 Function.prototype.mybind = function(...args){
   let functionObj = this
   let params = args.slice(1)
@@ -85,14 +93,118 @@ Function.prototype.mybind = function(...args){
   }
 }
 
+Function.prototype.myBind2 = function(context, args1) {
+  let fn = this
+  return function(...args2){
+    fn.apply(context,[...args1,args2])
+  }
+}
+
 let print = printName.mybind(person ,'chennai')
 print('india')
 
 let printarrow = printNamefn.mybind(person ,'madurai')
 printarrow('india')
+/*My bind - end*/
 
-const betterFnDebouncing = debouncing(myFunction,1000)
-const betterFnThrotle = throtling(myFunction,2000)
+/* Group by with array reduce - start*/
+const people = [
+   { name: 'Lee', age: 21 },
+   { name: 'Ajay', age: 20 },
+   { name: 'Jane', age: 20 }
+]
+const groupBy = (arr, key) => {
+  return arr.reduce((acc, obj)=>{
+    acc[obj[key]] = [...acc[obj[key]] || [], obj]
+    return acc
+  },{})
+}
+
+const groupBy2 = (arr, property) => {
+  return arr.reduce((acc,obj) => {
+    const key = obj[property]
+    if(!acc[key]){
+      acc[key] = []
+    }
+    acc[key].push(obj)
+    return acc
+  }, {})
+}
+
+groupBy(people, 'age')
+/* Group by with array reduce - start*/
+
+/* Longeest palindrom- start*/
+function is_Palindrome(str1) {
+  var rev = str1.split("").reverse().join("");
+  return str1 == rev;
+}
+
+function longest_palindrome(str1){
+
+    var max_length = 0
+    var maxp = ''
+
+    for(var i=0; i < str1.length; i++) {
+      var subs = str1.substr(i, str1.length)
+
+      for(var j=subs.length; j>=0; j--) {
+        var sub_subs_str = subs.substr(0, j)
+     
+        if (sub_subs_str.length > 1 && is_Palindrome(sub_subs_str)) {
+          
+          if (sub_subs_str.length > max_length) {
+            max_length = sub_subs_str.length
+            maxp = sub_subs_str
+          }
+        }
+     }
+    }
+  return maxp;
+}
+console.log(longest_palindrome("abracadabra"));
+/* Longeest palindrom- end*/
+
+/* flaten an array */
+const array = [1,2,3,[3,4]]
+function flat(arr) {
+  return arr.reduce((acc, val) => acc.concat(val), [])
+}
+console.log(flat(array))
+
+/* flaten an object */
+
+const obj = {
+    Company: "GeeksforGeeks",
+    Address: "Noida",
+    contact: +91-999999999,
+    mentor: {
+        HTML: "GFG",
+        CSS: "GFG",
+        JavaScript: "GFG"
+    }
+}
+
+function flatObject(obj) {
+
+  let result = {}
+  for(let key in obj){
+    const value = obj[key]
+    if ((typeof value) === 'object' && !Array.isArray(value)) {
+      const temp = flatObject(value)
+      for(let innerKey in temp){
+        result[key+'.'+innerKey] = temp[innerKey]
+      }
+    }
+    else{
+      result[key] = value 
+    }
+  }
+
+  return result
+}
+
+flatObject(obj)
 
 </script>
 
