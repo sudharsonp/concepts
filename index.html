@@ -206,6 +206,48 @@ function flatObject(obj) {
 
 flatObject(obj)
 
+/* anagram */
+
+const findAnagramGroup =(arr) =>{
+  return arr.reduce((acc, value) => {
+    const sortedValue = value.split('').sort().join('')
+    if(!acc[sortedValue]){
+      acc[sortedValue] = []
+    }
+    acc[sortedValue].push(value)
+    return acc
+  }, {})
+}
+
+findAnagramGroup(['asdf','fdsa', 'dsaf','qwerwe','fdgfd','fdfgd'])
+
+/* find all index of */
+
+const cars = ["Nano", "Volvo", "BMW", "Nano", "VW", "Nano"];
+
+const getAllIndexes = (arr, val) => {
+    let  indexes = []
+    let i = -1
+    while ((i = arr.indexOf(val, i+1)) != -1){
+        indexes.push(i)
+    }
+    return indexes
+}
+
+console.log(getAllIndexes(cars, "Nano"))
+
+const getAllIndexByReduce = (arr, searchValue) => {
+  return arr.reduce((acc, value, i)=> {
+    if(value === searchValue){
+      acc.push(i)
+    }
+    return acc
+  }, [])
+}
+console.log(getAllIndexByReduce(cars,"Nano"))
+
+
+console.log(getAllIndexByReduce("cslkdjfkldscccdfd sdkfjds c".split(''),"c"))
 </script>
 
 </body>
