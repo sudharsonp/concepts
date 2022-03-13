@@ -9,7 +9,7 @@ const longestPalindrom = (t) => {
             p[i] = Math.min(r-i, p[mirror] ? p[mirror] : 0)
         }
 
-        while( t[i + (1 + p[i])] === t[i - (1 + p[i])] ){
+        while(i + (1 + p[i])< text.length && t[i + (1 + p[i])] === t[i - (1 + p[i])] ){
             p[i]++
         }
         
@@ -31,6 +31,9 @@ const longestPalindrom = (t) => {
     console.log("The longest substring palindrom ", t ,"is", t.substring(start, end+1))
 }
 
-let text = "babcbabcbaccba"
+//let text = "babcbabcbaccba"
+//longestPalindrom(text)
+
+let text = "abaaaba"
 longestPalindrom(text)
 ///LPS of string is babcbabcbaccba : abcbabcba
